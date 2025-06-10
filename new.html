@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lucent Engineering BD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+    html, body {
+      height: 100%;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      overflow-x: hidden;
+      color: #e0e0e0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+    }
+
+    /* Dynamic Background Gradient by cursor */
+    body.dynamic-bg {
+      background: linear-gradient(135deg, hsl(210, 80%, 25%), hsl(220, 80%, 20%));
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Header: Glassmorphism */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10000;
+      backdrop-filter: blur(12px) saturate(180%);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 0 0 20px 20px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    /* Logo */
+    .logo img {
+      height: 48px;
+      filter: drop-shadow(0 0 5px #00c6ff);
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.3s ease;
+    }
+    .logo img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Search Bar Glass */
+    .search-container {
+      flex-grow: 1;
+      max-width: 600px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 14px 50px 14px 25px;
+      border-radius: 50px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #111;
+      outline: none;
+      box-shadow:
+        inset 0 0 8px #00c6ff44,
+        0 0 20px #00c6ff33;
+      transition: all 0.4s ease;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .search-container input::placeholder {
+      color: #999;
+      font-style: italic;
+    }
+    .search-container input:focus {
+      background: #00c6ff;
+      color: #fff;
+      box-shadow:
+        0 0 12px #00c6ff,
+        0 0 25px #00c6ffcc;
+      transform: scale(1.05);
+    }
+    /* Search button inside search bar */
+    .search-container .search-btn {
+      position: absolute;
+      right: 12px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #008000;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s ease;
+    }
+    .search-container .search-btn:hover {
+      color: #000000;
+    }
+    .search-container .search-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 2.5;
+    }
+
+    /* Nav Links */
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      user-select: none;
+    }
+    .nav-links a {
+      position: relative;
+      color: #e0e0e0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: color 0.4s ease;
+      white-space: nowrap;
+    }
+    /* Gradient hover underline animation */
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #00f, #0ff, #0ff, #00f);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+      border-radius: 2px;
+    }
+    .nav-links a:hover {
+      color: #00f0ff;
+    }
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Auth buttons container */
+    .auth-buttons {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    /* Base button styles */
+    .btn {
+      padding: 10px 22px;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 24px;
+      border: 2px solid #00c6ff;
+      background: transparent;
+      color: #00c6ff;
+      cursor: pointer;
+      transition: 
+        background-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Log In button - outlined */
+    .login-btn:hover {
+      background-color: #00c6ff;
+      color: #111;
+      box-shadow: 0 0 12px #00c6ffaa;
+      transform: scale(1.05);
+    }
+
+    /* Sign Up button - filled */
+    .signup-btn {
+      background: #00c6ff;
+      color: #111;
+      border: 2px solid #00c6ff;
+      box-shadow: 0 0 12px #00c6ffaa;
+    }
+    .signup-btn:hover {
+      background: #00eaff;
+      box-shadow: 0 0 18px #00eaffcc;
+      transform: scale(1.05);
+    }
+
+    /* Main layout */
+    .main {
+      display: flex;
+      min-height: calc(100vh - 110px);
+      padding: 30px 60px;
+      gap: 40px;
+    }
+
+    /* Sidebar Glass */
+    .sidebar {
+      width: 270px;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      user-select: none;
+    }
+    .sidebar .nav-links {
+      flex-direction: column;
+      gap: 25px;
+    }
+    .sidebar .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #cceeffdd;
+      padding: 15px 22px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow:
+        0 0 8px #00c6ff44;
+      transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+      white-space: nowrap;
+    }
+    .sidebar .nav-links a img {
+      height: 28px;
+      filter: drop-shadow(0 0 3px #00c6ffbb);
+      user-select: none;
+    }
+    .sidebar .nav-links a:hover {
+      background: #00c6ff22;
+      box-shadow: 0 0 15px #00c6ffaa;
+      transform: translateX(8px) scale(1.05);
+      color: #00eaff;
+    }
+
+    /* Content */
+    .content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+
+    /* Categories with glass and big visuals */
+    .categories {
+      display: flex;
+      flex-direction: column;
+      gap: 45px;
+    }
+    .category {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px) saturate(150%);
+      border-radius: 32px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .category:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 40px 0 rgba(0, 198, 255, 0.6);
+    }
+
+    /* Category images: large, sharp with glow */
+    .category img {
+      width: 100%;
+      max-height: 440px;
+      object-fit: cover;
+      border-radius: 32px 32px 0 0;
+      filter: drop-shadow(0 0 15px #00c6ffaa);
+      user-select: none;
+      transition: filter 0.3s ease;
+    }
+    .category:hover img {
+      filter: drop-shadow(0 0 25px #00eaffcc);
+    }
+
+    /* Animated gradient heading text */
+    .category h3 {
+      margin: 25px 0 40px;
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00c6ff, #00eaff, #00c6ff);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textGradientShift 3s ease infinite alternate;
+      user-select: none;
+      letter-spacing: 2px;
+    }
+
+    @keyframes textGradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .main {
+        flex-direction: column;
+        padding: 20px 30px;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 20px 15px;
+        border-radius: 20px;
+      }
+      .sidebar .nav-links {
+        flex-direction: row;
+        gap: 15px;
+      }
+      .sidebar .nav-links a {
+        padding: 12px 16px;
+        font-size: 1rem;
+      }
+      .content {
+        padding-top: 30px;
+      }
+    }
+
+    /* Responsive auth buttons & header flex wrap */
+    @media (max-width: 700px) {
+      header {
+        justify-content: center;
+        gap: 20px;
+      }
+      .auth-buttons {
+        gap: 12px;
+      }
+      .btn {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+      }
+      .nav-links {
+        gap: 24px;
+      }
+      .search-container {
+        max-width: 100%;
+      }
+	
+}
+.pa{
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    height: 70px;
+    border-radius: 20px;
+    box-shadow: 0 20px 100px rgba(0, 17, 63, 0.37);
+    backdrop-filter: blur(50px);
+	background-color: rgb(0, 0, 0)
+	}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="Lucent.png" alt="Lucent Engineering" />
+    </div>
+
+    <div class="search-container">
+      <input type="text" placeholder="Search products..." aria-label="Search products" />
+      <button class="search-btn" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
+          <circle cx="11" cy="11" r="7" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Cart</a>
+    </nav>
+
+    <div class="auth-buttons" aria-label="User authentication">
+      <button class="btn login-btn">Log In</button>
+      <button class="btn signup-btn">Sign Up</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <nav class="nav-links">
+        <a href="#"><img src="https://img.icons8.com/ios-filled/50/00c6ff/home.png" alt="" /> Home</a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/50/00c6ff/about.png" alt="" /> About</a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/50/00c6ff/phone.png" alt="" /> Contact</a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/50/00c6ff/shopping-cart.png" alt="" /> Cart</a>
+      </nav>
+    </aside>
+
+    <section class="content" aria-label="Main content area">
+      <div class="categories">
+        <article class="category" tabindex="0" aria-label="UPS Category">
+          <img src="https://media.licdn.com/dms/image/v2/D5612AQFGoAryeWMOZQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1693539282557?e=2147483647&v=beta&t=P0pJt-2Q724OlIoZ_HQXzDAln2XW63qPEUzLtwxLMPs" alt="UPS Device" />
+          <h3>UPS</h3>
+        </article>
+
+        <article class="category" tabindex="0" aria-label="IPS Category">
+          <img src="https://discoverbd.net/wp-content/uploads/2023/08/Screenshot_7-2.jpg" alt="IPS Device" />
+          <h3>IPS</h3>
+        </article>
+
+        <article class="category" tabindex="0" aria-label="Battery Category">
+          <img src="https://semartbd.com/public/uploads/all/xU6tZizNHgHh8nbGC0gKY98rOgaLd2GYEWIZ6hQy.png" alt="Battery" />
+          <h3>Battery</h3>
+        </article>
+
+        <article class="category" tabindex="0" aria-label="AVR Category">
+          <img src="https://ipason.ph/wp-content/uploads/2024/06/ph-11134207-7r990-lms8uwytok4x4e.jpg" alt="AVR Device" />
+          <h3>AVR</h3>
+        </article>
+      </div>
+	  <div class="pa"><p>powered by Lucent BD | Reliable Solution </p> </div>
+    </section>
+  </main>
+  <script>
+    // Optional: Dynamic background gradient based on cursor
+    // Uncomment below if you want dynamic effect
+
+    /*
+    document.body.addEventListener('mousemove', e => {
+      const { clientX: x, clientY: y } = e;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const xPercent = x / width * 100;
+      const yPercent = y / height * 100;
+
+      document.body.style.background = 
+        `radial-gradient(circle at ${xPercent}% ${yPercent}%, #00c6ff, #002f4b 80%)`;
+    });
+    */
+  </script>
+</body>
+</html>
