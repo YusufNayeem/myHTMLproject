@@ -73,9 +73,9 @@ body{
     background-color: rgb(232, 97, 48);
     cursor: pointer;
     box-shadow: 0 0 100px rgb(128, 122, 122);
+    transition: 0.5s;
 }
 .container .login:hover{
     background-color: rgba(66, 243, 22, 0.842);
-    transition: 0.5s;
     box-shadow: 0 10px 50px rgb(135, 175, 88);
 }
